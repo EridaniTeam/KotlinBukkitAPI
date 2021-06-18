@@ -7,9 +7,9 @@ import org.kotlinmc.bukkit.extensions.event
 import org.bukkit.command.Command
 import org.bukkit.event.server.PluginDisableEvent
 import org.kotlinmc.bukkit.*
-import org.kotlinmc.bukkit.provideKotlinBukkitAPI
+import org.kotlinmc.bukkit.provideKotlinMinecraftAPI
 
-internal fun provideCommandController() = provideKotlinBukkitAPI().commandController
+internal fun provideCommandController() = provideKotlinMinecraftAPI().commandController
 
 internal class CommandController(
         override val plugin: KotlinMinecraftAPI

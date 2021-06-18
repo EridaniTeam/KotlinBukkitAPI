@@ -8,7 +8,7 @@ import org.kotlinmc.bukkit.utils.KClassComparator
 import java.util.*
 import kotlin.reflect.KClass
 
-internal fun provideProviderController() = provideKotlinBukkitAPI().providerController
+internal fun provideProviderController() = provideKotlinMinecraftAPI().providerController
 
 internal class ProviderController(
     override val plugin: KotlinMinecraftAPI

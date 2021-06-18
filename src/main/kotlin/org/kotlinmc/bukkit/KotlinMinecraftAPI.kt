@@ -6,7 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin
 import org.kotlinmc.bukkit.controllers.*
 import org.kotlinmc.bukkit.extensions.registerEvents
 
-internal fun provideKotlinBukkitAPI(): KotlinMinecraftAPI {
+internal fun provideKotlinMinecraftAPI(): KotlinMinecraftAPI {
     return Bukkit.getServer().pluginManager.getPlugin("KotlinMinecraftBukkit") as KotlinMinecraftAPI?
         ?: throw IllegalAccessException("The plugin KotlinMinecraftBukkit is not loaded yet")
 }

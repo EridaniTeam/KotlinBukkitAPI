@@ -9,7 +9,7 @@ import org.kotlinmc.bukkit.utils.BungeeCordRequest
 import java.nio.ByteBuffer
 import java.nio.charset.Charset
 
-internal fun provideBungeeCordController() = provideKotlinBukkitAPI().bungeeCordController
+internal fun provideBungeeCordController() = provideKotlinMinecraftAPI().bungeeCordController
 
 internal class BungeeCordController(
     val plugin: KotlinMinecraftAPI

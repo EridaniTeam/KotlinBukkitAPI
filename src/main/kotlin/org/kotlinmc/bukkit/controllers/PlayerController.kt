@@ -13,9 +13,9 @@ import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.event.server.PluginDisableEvent
 import org.kotlinmc.bukkit.*
 import org.kotlinmc.bukkit.collections.onlinePlayerMapOf
-import org.kotlinmc.bukkit.provideKotlinBukkitAPI
+import org.kotlinmc.bukkit.provideKotlinMinecraftAPI
 
-internal fun providePlayerController() = provideKotlinBukkitAPI().playerController
+internal fun providePlayerController() = provideKotlinMinecraftAPI().playerController
 
 internal class PlayerController(
         override val plugin: KotlinMinecraftAPI
