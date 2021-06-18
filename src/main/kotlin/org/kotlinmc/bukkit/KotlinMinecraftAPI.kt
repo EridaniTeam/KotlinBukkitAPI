@@ -13,9 +13,7 @@ internal fun provideKotlinMinecraftAPI(): KotlinMinecraftAPI {
 
 class KotlinMinecraftAPI : JavaPlugin() {
     init {
-        me.bristermitten.pdm.SpigotDependencyManager.of(this).loadAllDependencies().thenRun {
-            logger.info("Kotlin Minecraft API dependency is loaded!")
-        }
+        me.bristermitten.pdm.SpigotDependencyManager.of(this).loadAllDependencies()
     }
 
     internal val commandController = CommandController(this)

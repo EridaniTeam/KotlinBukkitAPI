@@ -8,7 +8,7 @@ plugins {
     `maven-publish`
 }
 
-val kotlinMCBukkitVersion = "0.0.1"
+val kotlinMCBukkitVersion = "0.0.2"
 
 group = "club.eridani"
 version = kotlinMCBukkitVersion
@@ -26,8 +26,16 @@ dependencies {
         exclude(module = "kotlin-stdlib-jdk8")
     }
 
-    pdm("org.jetbrains.kotlinx:kotlinx-serialization-core:1.2.1")
-    pdm("com.charleskorn.kaml:kaml:0.34.0")
+    pdm("org.jetbrains.kotlinx:kotlinx-serialization-core:1.2.1") {
+        exclude(module = "kotlin-stdlib")
+        exclude(module = "kotlin-stdlib-jdk7")
+        exclude(module = "kotlin-stdlib-jdk8")
+    }
+    pdm("com.charleskorn.kaml:kaml:0.34.0") {
+        exclude(module = "kotlin-stdlib")
+        exclude(module = "kotlin-stdlib-jdk7")
+        exclude(module = "kotlin-stdlib-jdk8")
+    }
 
     compileOnly("com.destroystokyo.paper:paper-api:1.12.2-R0.1-SNAPSHOT")
 }
@@ -46,6 +54,7 @@ val spaceProperty = loadProperties("${projectDir.absolutePath}/space.properties"
 
 
 val sources by tasks.registering(Jar::class) {
+    archiveClassifier.set("sources")
     from(sourceSets.main.get().allSource)
 }
 
