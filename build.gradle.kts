@@ -4,7 +4,7 @@ plugins {
     kotlin("jvm") version "1.5.10"
     id("me.bristermitten.pdm") version "0.0.33"
     id("net.minecrell.plugin-yml.bukkit") version "0.4.0"
-
+    kotlin("plugin.serialization") version "1.5.10"
     `maven-publish`
 }
 
@@ -25,6 +25,10 @@ dependencies {
         exclude(module = "kotlin-stdlib-jdk7")
         exclude(module = "kotlin-stdlib-jdk8")
     }
+
+    pdm("org.jetbrains.kotlinx:kotlinx-serialization-core:1.2.1")
+    pdm("com.charleskorn.kaml:kaml:0.34.0")
+
     compileOnly("com.destroystokyo.paper:paper-api:1.12.2-R0.1-SNAPSHOT")
 }
 
