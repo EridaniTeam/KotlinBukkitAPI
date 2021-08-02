@@ -24,4 +24,4 @@ dependencies {
 ## Document
 The document is in old repo: https://github.com/DevSrSouza/KotlinBukkitAPI
 
-Chinese Translated(中文翻译): https://github.com/DevSrSouza/KotlinBukkitAPI (WIP, contribution are welcome)
+Chinese Translated(中文翻译): https://app.gitbook.com/@xiaoshen/s/kotlinbukkitapi/ (WIP, contribution are welcome)
