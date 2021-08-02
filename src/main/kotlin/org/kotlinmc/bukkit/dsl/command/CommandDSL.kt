@@ -141,7 +141,7 @@ open class CommandDSL(
     }
 
     infix operator fun String.invoke(block: CommandBuilderBlock): CommandDSL {
-        return subCommandBuilder(name).apply(block).also { subCommands.add(it) }
+        return subCommandBuilder(this).apply(block).also { subCommands.add(it) }
     }
 
     open fun executor(block: ExecutorBlock<CommandSender>) {
@@ -157,7 +157,7 @@ open class CommandDSL(
     }
 
     open fun <T : CommandSender> genericExecutor(clazz: KClass<T>, block: ExecutorBlock<T>) {
-        executors.put(clazz, block as ExecutorBlock<CommandSender>)
+        executors[clazz] = block as ExecutorBlock<CommandSender>
     }
 
     inline fun <reified T : CommandSender> genericExecutor(noinline block: ExecutorBlock<T>) {
