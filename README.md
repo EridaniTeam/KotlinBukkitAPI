@@ -20,3 +20,8 @@ dependencies {
     implementation("club.eridani.bukkit:kotlin-api:0.0.3")
 }
 ```
+
+## Document
+The document is in old repo: https://github.com/DevSrSouza/KotlinBukkitAPI
+
+Chinese Translated(中文翻译): https://github.com/DevSrSouza/KotlinBukkitAPI (WIP, contribution are welcome)
