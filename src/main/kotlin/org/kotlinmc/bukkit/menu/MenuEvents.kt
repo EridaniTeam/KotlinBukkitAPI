@@ -12,10 +12,10 @@ interface MenuPlayer {
     fun putPlayerData(key: String, value: Any) {
         val map = menu.playerData[player]
         if (map != null) map[key] = value
-        else menu.playerData[player] = WeakHashMap<String, Any>().apply {put(key, value)}
+        else menu.playerData[player] = WeakHashMap<String, Any>().apply { put(key, value) }
     }
 
-    fun getPlayerData(key: String) = menu.playerData.get(player)?.get(key)
+    fun getPlayerData(key: String) = menu.playerData[player]?.get(key)
 }
 
 interface MenuPlayerInventory : MenuPlayer {
@@ -67,34 +67,34 @@ interface MenuPlayerCancellable : MenuPlayer {
 }
 
 open class MenuPlayerInteract(
-        override val menu: Menu<*>,
-        override val player: Player,
-        override val inventory: Inventory,
-        override var canceled: Boolean
+    override val menu: Menu<*>,
+    override val player: Player,
+    override val inventory: Inventory,
+    override var canceled: Boolean,
 ) : MenuPlayerInventory, MenuPlayerCancellable
 
 class MenuPlayerPreOpen(
-        override val menu: Menu<*>,
-        override val player: Player,
-        override var canceled: Boolean = false
+    override val menu: Menu<*>,
+    override val player: Player,
+    override var canceled: Boolean = false,
 ) : MenuPlayerCancellable
 
 class MenuPlayerOpen(
-        override val menu: Menu<*>,
-        override val player: Player,
-        override val inventory: Inventory
+    override val menu: Menu<*>,
+    override val player: Player,
+    override val inventory: Inventory,
 ) : MenuPlayerInventory
 
 class MenuPlayerUpdate(
-        override val menu: Menu<*>,
-        override val player: Player,
-        override val inventory: Inventory,
-        var title: String
+    override val menu: Menu<*>,
+    override val player: Player,
+    override val inventory: Inventory,
+    var title: String,
 ) : MenuPlayerInventory
 
 class MenuPlayerClose(
-        override val menu: Menu<*>,
-        override val player: Player
+    override val menu: Menu<*>,
+    override val player: Player,
 ) : MenuPlayer
 
 interface MenuPlayerMove : MenuPlayerInventory, MenuPlayerCancellable {
@@ -103,13 +103,13 @@ interface MenuPlayerMove : MenuPlayerInventory, MenuPlayerCancellable {
 }
 
 class MenuPlayerMoveTo(
-        menu: Menu<*>,
-        player: Player,
-        inventory: Inventory,
-        canceled: Boolean,
-        override val toMoveSlot: Int,
-        override val toMoveItem: ItemStack?,
-        var targetSlot: Int
+    menu: Menu<*>,
+    player: Player,
+    inventory: Inventory,
+    canceled: Boolean,
+    override val toMoveSlot: Int,
+    override val toMoveItem: ItemStack?,
+    var targetSlot: Int,
 ) : MenuPlayerInteract(menu, player, inventory, canceled), MenuPlayerMove {
 
     var targetCurrentItem: ItemStack?

@@ -1,5 +1,6 @@
 package org.kotlinmc.bukkit.flow
 
+import kotlinx.coroutines.DelicateCoroutinesApi
 import org.kotlinmc.bukkit.extensions.WithPlugin
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.*
@@ -39,6 +40,7 @@ inline fun <reified T : Event> Plugin.eventFlow(
  *
  * [assign] is use for auto cancel the Flow when the Player disconnects.
  */
+@OptIn(DelicateCoroutinesApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 fun <T : Event> eventFlow(
     type: KClass<T>,
     plugin: Plugin,
@@ -59,7 +61,7 @@ fun <T : Event> eventFlow(
         }
     }
 
-    val assignListener: Listener? = if (assign != null)
+    val assignMonitor: Listener? = if (assign != null)
         assignListener.apply {
             fun PlayerEvent.closeChannel() {
                 if (!channel.isClosedForSend && player.name == assign.name)
@@ -73,7 +75,7 @@ fun <T : Event> eventFlow(
 
     channel.invokeOnClose {
         listener.unregisterListener()
-        assignListener?.unregisterListener()
+        assignMonitor?.unregisterListener()
     }
 
     return flow
