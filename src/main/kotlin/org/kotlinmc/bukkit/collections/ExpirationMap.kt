@@ -2,7 +2,7 @@ package org.kotlinmc.bukkit.collections
 
 import org.kotlinmc.bukkit.extensions.WithPlugin
 import org.kotlinmc.bukkit.extensions.scheduler
-import org.kotlinmc.bukkit.utils.time.now
+import org.kotlinmc.bukkit.utils.now
 import org.bukkit.plugin.Plugin
 import org.bukkit.scheduler.BukkitTask
 import java.util.*

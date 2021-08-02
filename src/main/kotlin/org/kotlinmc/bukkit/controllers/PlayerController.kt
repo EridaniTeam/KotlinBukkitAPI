@@ -6,8 +6,8 @@ import org.kotlinmc.bukkit.extensions.displaced
 import org.kotlinmc.bukkit.extensions.event
 import org.kotlinmc.bukkit.extensions.scheduler
 
-import org.kotlinmc.bukkit.utils.player.ChatInput
-import org.kotlinmc.bukkit.utils.player.PlayerCallback
+import org.kotlinmc.bukkit.utils.ChatInput
+import org.kotlinmc.bukkit.utils.PlayerCallback
 import org.bukkit.event.player.AsyncPlayerChatEvent
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.event.server.PluginDisableEvent

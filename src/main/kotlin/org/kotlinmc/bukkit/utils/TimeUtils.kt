@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalTime::class)
 
-package org.kotlinmc.bukkit.utils.time
+package org.kotlinmc.bukkit.utils
 
 import kotlin.time.*
 

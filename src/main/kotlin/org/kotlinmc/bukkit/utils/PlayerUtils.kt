@@ -1,4 +1,4 @@
-package org.kotlinmc.bukkit.utils.player
+package org.kotlinmc.bukkit.utils
 
 import org.kotlinmc.bukkit.controllers.providePlayerController
 import org.bukkit.entity.Player
@@ -12,10 +12,10 @@ typealias PlayerQuitFunction = PlayerCallbackFunction<Unit>
 typealias PlayerMoveFunction = PlayerCallbackFunction<Boolean>
 
 fun Player.chatInput(
-        plugin: Plugin,
-        sync: Boolean = false,
-        whenQuitWithoutInput: PlayerQuitFunction = {},
-        callback: ChatInputCallBack
+    plugin: Plugin,
+    sync: Boolean = false,
+    whenQuitWithoutInput: PlayerQuitFunction = {},
+    callback: ChatInputCallBack
 ) {
     providePlayerController().inputCallbacks.put(
             player,
@@ -47,10 +47,10 @@ fun Player.whenMove(
 }
 
 class ChatInput(
-        val plugin: Plugin,
-        val sync: Boolean,
-        val callback: ChatInputCallBack,
-        val playerQuit: PlayerQuitFunction
+    val plugin: Plugin,
+    val sync: Boolean,
+    val callback: ChatInputCallBack,
+    val playerQuit: PlayerQuitFunction
 )
 class PlayerCallback<R>(
         val plugin: Plugin,
