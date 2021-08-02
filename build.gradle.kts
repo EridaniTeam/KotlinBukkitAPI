@@ -1,9 +1,8 @@
-import org.jetbrains.kotlin.konan.properties.loadProperties
-
 plugins {
     kotlin("jvm") version "1.5.21"
     id("net.minecrell.plugin-yml.bukkit") version "0.4.0"
     kotlin("plugin.serialization") version "1.5.21"
+    id("com.github.johnrengelman.shadow") version "7.0.0"
     `maven-publish`
 }
 
