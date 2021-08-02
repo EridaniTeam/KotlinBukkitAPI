@@ -6,7 +6,7 @@ plugins {
     `maven-publish`
 }
 
-val kotlinMCBukkitVersion = "0.0.2"
+val kotlinMCBukkitVersion = "0.0.3"
 
 group = "club.eridani"
 version = kotlinMCBukkitVersion
@@ -56,4 +56,23 @@ bukkit {
 val sourceJar by tasks.registering(Jar::class) {
     archiveClassifier.set("sources")
     from(sourceSets.main.get().allSource)
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+
+            from(components["kotlin"])
+            artifact(sourceJar.get())
+
+            groupId = "club.eridani.bukkit"
+            artifactId = "kotlin-api"
+            version = kotlinMCBukkitVersion
+
+        }
+    }
+
+    repositories {
+        maven("file://${rootDir.absolutePath}/build/LocalMaven")
+    }
 }
