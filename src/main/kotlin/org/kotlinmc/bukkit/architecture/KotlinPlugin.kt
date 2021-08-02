@@ -32,13 +32,10 @@ open class KotlinPlugin : JavaPlugin() {
             priority: Int = 1,
             listener: PluginLifecycleListener
     ) {
-        _lifecycleListeners.put(
-                Lifecycle(
-                        priority,
-                        listener
-                ),
-                true
-        )
+        _lifecycleListeners[Lifecycle(
+            priority,
+            listener
+        )] = true
     }
 
     // implementation stuff, ignore...

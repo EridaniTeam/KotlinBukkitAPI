@@ -1,7 +1,5 @@
 package org.kotlinmc.bukkit.dsl.command
 
-import org.kotlinmc.bukkit.collections.onlinePlayerMapOf
-import org.kotlinmc.bukkit.extensions.WithPlugin
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
@@ -9,7 +7,11 @@ import kotlinx.coroutines.launch
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
-import org.kotlinmc.bukkit.extensions.*
+import org.kotlinmc.bukkit.collections.onlinePlayerMapOf
+import org.kotlinmc.bukkit.extensions.BukkitDispatchers
+import org.kotlinmc.bukkit.extensions.WithPlugin
+import org.kotlinmc.bukkit.extensions.register
+import org.kotlinmc.bukkit.extensions.sendMessage
 import kotlin.reflect.KClass
 
 typealias ExecutorBlock<T> = suspend Executor<T>.() -> Unit
@@ -17,25 +19,25 @@ typealias TabCompleterBlock = TabCompleter.() -> List<String>
 typealias CommandBuilderBlock = CommandDSL.() -> Unit
 
 fun WithPlugin<*>.simpleCommand(
-        name: String,
-        vararg aliases: String = arrayOf(),
-        description: String = "",
-        block: ExecutorBlock<CommandSender>
+    name: String,
+    vararg aliases: String = arrayOf(),
+    description: String = "",
+    block: ExecutorBlock<CommandSender>,
 ) = plugin.simpleCommand(name, *aliases, description = description, block = block)
 
 fun Plugin.simpleCommand(
-        name: String,
-        vararg aliases: String = arrayOf(),
-        description: String = "",
-        block: ExecutorBlock<CommandSender>
+    name: String,
+    vararg aliases: String = arrayOf(),
+    description: String = "",
+    block: ExecutorBlock<CommandSender>,
 ) = simpleCommand(name, *aliases, plugin = this, description = description, block = block)
 
 fun simpleCommand(
-        name: String,
-        vararg aliases: String = arrayOf(),
-        plugin: Plugin,
-        description: String = "",
-        block: ExecutorBlock<CommandSender>
+    name: String,
+    vararg aliases: String = arrayOf(),
+    plugin: Plugin,
+    description: String = "",
+    block: ExecutorBlock<CommandSender>,
 ) = command(name, *aliases, plugin = plugin) {
     if (description.isNotBlank()) this.description = description
 
@@ -43,54 +45,54 @@ fun simpleCommand(
 }
 
 inline fun WithPlugin<*>.command(
-        name: String,
-        vararg aliases: String = arrayOf(),
-        job: Job = SupervisorJob(),
-        coroutineScope: CoroutineScope = CoroutineScope(job + plugin.BukkitDispatchers.SYNC),
-        block: CommandBuilderBlock
+    name: String,
+    vararg aliases: String = arrayOf(),
+    job: Job = SupervisorJob(),
+    coroutineScope: CoroutineScope = CoroutineScope(job + plugin.BukkitDispatchers.SYNC),
+    block: CommandBuilderBlock,
 ) = plugin.command(name, *aliases, job = job, coroutineScope = coroutineScope, block = block)
 
 inline fun Plugin.command(
-        name: String,
-        vararg aliases: String = arrayOf(),
-        job: Job = SupervisorJob(),
-        coroutineScope: CoroutineScope = CoroutineScope(job + BukkitDispatchers.SYNC),
-        block: CommandBuilderBlock
+    name: String,
+    vararg aliases: String = arrayOf(),
+    job: Job = SupervisorJob(),
+    coroutineScope: CoroutineScope = CoroutineScope(job + BukkitDispatchers.SYNC),
+    block: CommandBuilderBlock,
 ) = command(name, *aliases, plugin = this, job = job, coroutineScope = coroutineScope, block = block)
 
 inline fun command(
-        name: String,
-        vararg aliases: String = arrayOf(),
-        plugin: Plugin,
-        job: Job = SupervisorJob(),
-        coroutineScope: CoroutineScope = CoroutineScope(job + plugin.BukkitDispatchers.SYNC),
-        block: CommandBuilderBlock
+    name: String,
+    vararg aliases: String = arrayOf(),
+    plugin: Plugin,
+    job: Job = SupervisorJob(),
+    coroutineScope: CoroutineScope = CoroutineScope(job + plugin.BukkitDispatchers.SYNC),
+    block: CommandBuilderBlock,
 ) = CommandDSL(plugin, name, *aliases, job = job, coroutineScope = coroutineScope).apply(block).apply {
     register(plugin)
 }
 
 class Executor<E : CommandSender>(
-        val sender: E,
-        val label: String,
-        val args: Array<out String>,
-        val command: CommandDSL,
-        val scope: CoroutineScope
+    val sender: E,
+    val label: String,
+    val args: Array<out String>,
+    val command: CommandDSL,
+    val scope: CoroutineScope,
 )
 
 class TabCompleter(
-        val sender: CommandSender,
-        val alias: String,
-        val args: Array<out String>
+    val sender: CommandSender,
+    val alias: String,
+    val args: Array<out String>,
 )
 
 open class CommandDSL(
-        val plugin: Plugin,
-        name: String,
-        vararg aliases: String = arrayOf(),
-        executor: ExecutorBlock<CommandSender>? = null,
-        var errorHandler: ErrorHandler = defaultErrorHandler,
-        val job: Job = SupervisorJob(),
-        private val coroutineScope: CoroutineScope = CoroutineScope(job + plugin.BukkitDispatchers.SYNC)
+    val plugin: Plugin,
+    name: String,
+    vararg aliases: String = arrayOf(),
+    executor: ExecutorBlock<CommandSender>? = null,
+    var errorHandler: ErrorHandler = defaultErrorHandler,
+    val job: Job = SupervisorJob(),
+    private val coroutineScope: CoroutineScope = CoroutineScope(job + plugin.BukkitDispatchers.SYNC),
 ) : org.bukkit.command.Command(name.trim()) {
 
     var onlyInGameMessage = ""
@@ -116,12 +118,12 @@ open class CommandDSL(
 
     open fun subCommandBuilder(name: String, vararg aliases: String = arrayOf()): CommandDSL {
         return CommandDSL(
-                plugin = plugin,
-                name = name,
-                aliases = aliases,
-                errorHandler = errorHandler,
-                job = job,
-                coroutineScope = coroutineScope
+            plugin = plugin,
+            name = name,
+            aliases = aliases,
+            errorHandler = errorHandler,
+            job = job,
+            coroutineScope = coroutineScope
         ).also {
             it.permission = this.permission
             it.permissionMessage = this.permissionMessage
@@ -131,11 +133,15 @@ open class CommandDSL(
     }
 
     inline fun command(
-            name: String,
-            vararg aliases: String = arrayOf(),
-            block: CommandBuilderBlock
+        name: String,
+        vararg aliases: String = arrayOf(),
+        block: CommandBuilderBlock,
     ): CommandDSL {
         return subCommandBuilder(name, *aliases).apply(block).also { subCommands.add(it) }
+    }
+
+    infix operator fun String.invoke(block: CommandBuilderBlock): CommandDSL {
+        return subCommandBuilder(name).apply(block).also { subCommands.add(it) }
     }
 
     open fun executor(block: ExecutorBlock<CommandSender>) {
@@ -163,9 +169,9 @@ open class CommandDSL(
     }
 
     override fun execute(
-            sender: CommandSender,
-            label: String,
-            args: Array<out String>
+        sender: CommandSender,
+        label: String,
+        args: Array<out String>,
     ): Boolean {
         if (!permission.isNullOrBlank() && !sender.hasPermission(permission)) {
             sender.sendMessage(permissionMessage)
@@ -195,7 +201,9 @@ open class CommandDSL(
                 if (playerExecutor != null) {
                     if (sender is Player) {
                         val playerJob = Job() // store and cancel when player
-                        if (cancelOnPlayerDisconnect) jobsFromPlayers.put(sender, playerJob, { if (it.isActive) it.cancel() })
+                        if (cancelOnPlayerDisconnect) jobsFromPlayers.put(sender,
+                            playerJob,
+                            { if (it.isActive) it.cancel() })
                         coroutineScope.launch(playerJob) {
                             val executorModel = Executor(sender, label, args, this@CommandDSL, coroutineScope)
                             treatFail(executorModel) {
@@ -235,8 +243,8 @@ open class CommandDSL(
         } else if (args.size > 0) {
             if (subCommands.isNotEmpty()) {
                 return subCommands
-                        .filter { it.name.startsWith(args.get(0), true) }
-                        .map { it.name }
+                    .filter { it.name.startsWith(args.get(0), true) }
+                    .map { it.name }
             } else return super.tabComplete(sender, alias, args)
         }
         return super.tabComplete(sender, alias, args)

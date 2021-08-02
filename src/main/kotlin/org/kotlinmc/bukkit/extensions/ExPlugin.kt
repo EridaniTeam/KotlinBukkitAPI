@@ -2,13 +2,15 @@ package org.kotlinmc.bukkit.extensions
 
 import org.bukkit.event.Listener
 import org.bukkit.plugin.Plugin
+import org.kotlinmc.bukkit.dsl.command.CommandBuilderBlock
+import org.kotlinmc.bukkit.dsl.command.command
 
 fun Plugin.registerEvents(
-        vararg listeners: Listener
+        vararg listeners: Listener,
 ) = listeners.forEach { server.pluginManager.registerEvents(it, this) }
 
 fun WithPlugin<*>.registerEvents(
-        vararg listeners: Listener
+        vararg listeners: Listener,
 ) = plugin.registerEvents(*listeners)
 
 // logger
@@ -24,4 +26,11 @@ fun WithPlugin<*>.severe(message: String) = plugin.severe(message)
 fun WithPlugin<*>.debug(message: String) = plugin.debug(message)
 fun WithPlugin<*>.fine(message: String) = plugin.fine(message)
 
-interface WithPlugin<T : Plugin> { val plugin: T }
+interface WithPlugin<T : Plugin> {
+    val plugin: T
+
+    infix operator fun String.invoke(block: CommandBuilderBlock) {
+        command(this, block = block)
+    }
+
+}
