@@ -44,7 +44,6 @@ dependencies {
 
 
 bukkit {
-
     name = "KotlinMinecraftBukkit"
 
     main = "org.kotlinmc.bukkit.KotlinMinecraftAPI"
@@ -73,6 +72,6 @@ publishing {
     }
 
     repositories {
-        maven("file://${rootDir.absolutePath}/build/LocalMaven")
+        maven("file://${System.getProperty("user.home")}/kb_maven")
     }
 }
