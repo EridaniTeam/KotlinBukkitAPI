@@ -6,7 +6,7 @@ plugins {
     `maven-publish`
 }
 
-val kotlinMCBukkitVersion = "0.0.3"
+val kotlinMCBukkitVersion = "0.0.4"
 
 group = "club.eridani"
 version = kotlinMCBukkitVersion
